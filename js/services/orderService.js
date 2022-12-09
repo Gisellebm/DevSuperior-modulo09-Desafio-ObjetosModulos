@@ -1,12 +1,11 @@
-import * as shippingService from './shippingService.js'
+import { shipment} from './shippingService.js'
 
-export function total(Order) {
-  const shipping = shippingService.shipment(Order.basic)
+export function total(order) {
+  const taxShipping = shipment(order)
   let totalDiscount = 0
-  if (Order.discount > 0) {
-    totalDiscount = Order.basic * (Order.discount / 100)
-  } else {
-    totalDiscount = 0
+  if (order.discount > 0) {
+    totalDiscount = order.basic * (order.discount / 100)
   }
-  return Order.basic - shipping - totalDiscount
+
+  return order.basic - totalDiscount + taxShipping
 }
